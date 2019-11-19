@@ -1,0 +1,50 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        h2
+          span.mt-100.mr-10 Create Product
+        hr.soft
+        if errors
+          each error in errors
+            .alert.alert-danger= error
+        form(action="/products", method="POST")
+          .form-group
+            label(for="name") Name
+            input#name.form-control(type="text" name="name" value= values ? values.name : '')
+          .form-group
+            label(for="price") Price
+            input#price.form-control(type="number" name="price" value= values ? values.price : '')
+          .form-group
+            label(for="description") Description
+            input#description.form-control(type="text" name="description" value= values ? values.description : '')
+
+          .form-group
+            label.control-label(for='category') Category &nbsp;
+            a.btn.btn-success(href="/categories/new") New Category
+            select#state(name='category')
+              option(value='') -
+              if(brands)
+                each category in categories
+                  option(value=category.id) #{category.name}
+
+          .form-group
+            label.control-label(for='brand') Brand &nbsp;
+            a.btn.btn-success(href="/brands/new") New Brand
+            select#state(name='brand')
+              option(value='') -
+              if(brands)
+                each brand in brands
+                  option(value=brand.id) #{brand.name}
+          .form-group
+            label.control-label(for='sold_out') Sold out
+            select#state(name='sold_out')
+                option(value='true') True
+                option(value='false') False
+          .form-group
+            label(for="name") Image
+            input#name.form-control(type="text" name="image" placeholder="insert image link" value= values ? values.image : '')
+          button(class="btn btn-success") Create
+  // Footer ==========================================================
+  include ../layouts/footer.pug

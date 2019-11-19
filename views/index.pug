@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p Module: Quản lý sản phẩm
+  h1
+    a(href='/products') click to project 
+  p API
+  img(src="/images/api.png")
+  p Ví dụ:
+  p Lấy thông tin tất cả sản phẩm &nbsp;
+    a(href='/api/products') click
+  p Lấy thông tin chi tiết 1 sản phẩm &nbsp;
+    a(href='/api/products/1') click
+  p Lấy thông tin tất cả categories &nbsp;
+    a(href='/api/categories') click
+  p Design by VDN

@@ -1,0 +1,61 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        h2
+          span.mt-100.mr-10 Products
+          span &nbsp;
+          a.btn.btn-success(href="/products/new") New Product
+          br
+          h4 Total: #{length}
+        hr.soft
+        br 
+        table.table.table-bordered
+          thead 
+            tr.thead-dark
+              th ID
+              th Name
+              th Image
+              th Price
+              th Category
+              th Brand
+              th Sold out
+              th Edit
+              th Delete
+          tbody
+            if(products)
+              each product in products
+                tr
+                  td
+                    a(href="/products/"+product.id) #{product.id}
+                  td
+                    a(href="/products/"+product.id) #{product.name}
+                  td
+                    a(href="/products/"+product.id)
+                      img( src = product.image , width = "70", height="72")
+                  td #{product.price} ₫
+                  // td= product.description
+                  if(categories)
+                    each category in categories
+                      if category.id == product.category
+                        td
+                          a(href="/categories/"+category.id) #{category.name}
+                  if(brands)
+                    each brand in brands
+                      if brand.id == product.brand
+                        td
+                          a(href="/brands/"+brand.id) #{brand.name}
+                    td= product.sold_out
+                  td
+                    a.btn.btn-warning(href='/products/'+product.id+'/edit') Edit
+                  td
+                    form(action='/products/delete/'+product.id, method='POST')
+                      input(type='hidden' name='_method' value='DELETE')
+                      input(type='hidden' name='_token' value='the_token')
+                      button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                        span Delete
+        br 
+        hr.soft
+  // Footer ==========================================================
+  include ../layouts/footer.pug

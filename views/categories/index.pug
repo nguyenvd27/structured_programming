@@ -1,0 +1,46 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        h2
+          span.mt-100.mr-10 Categories
+          span &nbsp;
+          a.btn.btn-success(href="/categories/new") New Category
+          br
+          h4 Total: #{length}
+        hr.soft
+        br 
+        table.table.table-bordered
+          thead 
+            tr.thead-dark
+              th ID
+              th Name
+              th Description
+              th Created At
+              th Updated At
+              th Edit
+              th Delete
+          tbody
+            if(length > 0)
+              each category in categories
+                tr
+                  td
+                    a(href="/categories/"+category.id) #{category.id}
+                  td
+                    a(href="/categories/"+category.id) #{category.name}
+                  td= category.description
+                  td= category.created_at
+                  td= category.updated_at
+                  td
+                    a.btn.btn-warning(href='/categories/'+category.id+'/edit') Edit
+                  td
+                    form(action='/categories/delete/'+category.id, method='POST')
+                      input(type='hidden' name='_method' value='DELETE')
+                      input(type='hidden' name='_token' value='the_token')
+                      button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                        span Delete
+        br 
+        hr.soft
+  // Footer ==========================================================
+  include ../layouts/footer.pug

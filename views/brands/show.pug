@@ -1,0 +1,61 @@
+extends ../layouts/header.pug
+block content
+  // primary block area
+  .container
+    .row
+      .col-12
+        h2
+          h4 ID: #{brand.id}
+          hr.soft
+          h4 Name: #{brand.name}
+          h4 Products Total: #{length}
+          h4 Description: #{brand.description}
+          h4 Created At: #{brand.created_at}
+          h4 Updated At: #{brand.updated_at}
+          table
+            td
+              a.btn.btn-warning(href='/brands/'+brand.id+'/edit') Edit
+            td
+              form(action='/brands/delete/'+brand.id, method='POST')
+                input(type='hidden' name='_method' value='DELETE')
+                input(type='hidden' name='_token' value='the_token')
+                button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                  span Delete
+        hr.soft
+        br 
+        table.table.table-bordered
+          h4 Products of brand:  #{brand.name}
+          thead 
+            tr.thead-dark
+              th ID
+              th Name
+              th Image
+              th Price
+              th Sold out
+              th Edit
+              th Delete
+          tbody
+            if(length > 0)
+              each product in products
+                tr
+                  td
+                    a(href="/products/"+product.id) #{product.id}
+                  td
+                    a(href="/products/"+product.id) #{product.name}
+                  td
+                    a(href="/products/"+product.id)
+                      img( src = product.image , width = "70", height="72")
+                  td #{product.price} ₫
+                  td= product.sold_out
+                  td
+                    a.btn.btn-warning(href='/products/'+product.id+'/edit') Edit
+                  td
+                    form(action='/products/delete/'+product.id, method='POST')
+                      input(type='hidden' name='_method' value='DELETE')
+                      input(type='hidden' name='_token' value='the_token')
+                      button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                        span Delete
+        br 
+        hr.soft
+    // footer start
+    include ../layouts/footer.pug

@@ -1,0 +1,21 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        br 
+        h2
+          span.mt-100.mr-10 Edit Brand
+        h4
+          span.mt-100.mr-10 ID: #{brand.id}
+        hr
+        form#form(action="/brands/"+brand.id, method="POST")
+          .form-group
+            label(for="name") Name
+            input#name.form-control(type="text" name="name" value= brand.name ? brand.name : '')
+          .form-group
+            label(for="description") Description
+            input#description.form-control(type="text" name= "description" value= brand.description ? brand.description : '')
+          button(class="btn btn-primary ml-4") Update
+  // Footer ==========================================================
+  include ../layouts/footer.pug

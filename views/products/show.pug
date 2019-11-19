@@ -1,0 +1,91 @@
+extends ../layouts/header.pug
+block content
+  // primary block area
+  .table_primary_block.pt-100
+    .container
+      .row
+        .col-lg-5.col-md-5.col-sm-12
+          .product-flags
+            .tab-content
+              #tabone.tab-pane.fade.show.active(role='tabpanel')
+                .product_tab_img
+                  a(href='#')
+                    img(src=product.image, alt='')
+        .col-lg-7.col-md-7.col-sm-12
+          .product__details_content
+            .demo_product
+              h2 #{product.name}
+              p Brand: 
+                strong #{brand_name}
+            .product_comments_block
+              .comments_note.clearfix
+                i.fa.fa-star(aria-hidden='true')
+                i.fa.fa-star(aria-hidden='true')
+                i.fa.fa-star(aria-hidden='true')
+                i.fa.fa-star(aria-hidden='true')
+                i.fa.fa-star(aria-hidden='true')
+            .current_price
+              span #{product.price} ₫
+            .product_information
+              #product_description_short
+                p #{product.description}
+              .product_variants
+                .quickview_plus_minus
+                  .quickview_plus_minus_inner
+                    .add_button
+                      a.btn.btn-warning(href='/products/'+product.id+'/edit') Edit
+                    span &nbsp;
+                    form(action='/products/delete/'+product.id, method='POST')
+                      input(type='hidden' name='_method' value='DELETE')
+                      input(type='hidden' name='_token' value='the_token')
+                      button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                        span Delete
+                .product-availability
+                  span#availability
+                    
+                    if(product.sold_out==false)
+                      i.zmdi.zmdi-check &nbsp; Còn hàng
+                    else 
+                      p hết hàng 
+                .block-reassurance
+                  ul
+                    li
+                      img(src='assets/img/cart/cart1.png', alt='')
+                      span Security policy (edit with Customer reassurance module)
+                    li
+                      img(src='assets/img/cart/cart2.png', alt='')
+                      span Delivery policy (edit with Customer reassurance module)
+                    li
+                      img(src='assets/img/cart/cart3.png', alt='')
+                      span Return policy (edit with Customer reassurance module)
+  // product page tab
+  .product_page_tab.ptb-100
+    .container
+      .row
+        .col-12
+          .product_tab_button
+            ul#myTab.nav.nav-tabs(role='tablist')
+              li
+                a#home-tab.tav_past.active(data-toggle='tab', href='#information', role='tab', aria-controls='information', aria-selected='true') Information
+              li
+                a#profile-tab.tav_past(data-toggle='tab', href='#description', role='tab', aria-controls='description', aria-selected='false') Description
+          #myTabContent.tab-content
+            #information.tab-pane.fade.show.active(role='tabpanel')
+              .product-information
+                p Id: #{product.id}
+                p Name: #{product.name}
+                p Category: #{category_name}
+                p Brand: #{brand_name}
+                p Price: #{product.price}
+                p Sold out: #{product.sold_out}
+                p Created At: #{product.created_at}
+                p Update At: #{product.updated_at}
+
+            #description.tab-pane.fade(role='tabpanel')
+              .product-description
+                .product-manufacturer
+                  p #{product.description}
+                  a(href='#')
+                    img(src='assets/img/cart/11.jpg', alt='')
+    // footer start
+    include ../layouts/footer.pug

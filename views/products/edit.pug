@@ -1,0 +1,58 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        br 
+        h2
+          span.mt-100.mr-10 Edit Product
+        h4
+          span.mt-100.mr-10 ID: #{product.id}
+        hr
+        form#form(action="/products/"+product.id, method="POST")
+          .form-group
+            label(for="name") Name
+            input#name.form-control(type="text" name="name" value= product.name ? product.name : '')
+          .form-group
+            label(for="price") Price
+            input#price.form-control(type="number" name="price" value= product.price ? product.price : '')
+          .form-group
+            label(for="description") Description
+            input#description.form-control(type="text" name= "description" value= product.description ? product.description : '')
+          .form-group
+            label.control-label(for='category') Category
+            select#state(name='category')
+              if(categories)
+                each category in categories
+                  if category.id == product.category
+                    option(value=category.id) #{category.name}
+                each category in categories
+                  if category.id != product.category
+                    option(value=category.id) #{category.name}
+          .form-group
+            label.control-label(for='brand') Brand
+            select#state(name='brand')
+              if(brands)
+                each brand in brands
+                  if brand.id == product.brand
+                    option(value=brand.id) #{brand.name}
+                each brand in brands
+                  if brand.id != product.brand
+                    option(value=brand.id) #{brand.name}
+          .form-group
+            label.control-label(for='sold_out') Sold out
+            select#state(name='sold_out') 
+              if product.sold_out==true
+                option(value='true') True
+                option(value='false') False
+              else if product.sold_out==false
+                option(value='false') False
+                option(value='true') True
+          .form-group
+            label(for="image") Image
+            br
+            img(src=product.image, width = "200", height="200")
+            input#name.form-control(type="text" name="image" value= product.image ? product.image : '')
+          button(class="btn btn-primary ml-4") Update
+  // Footer ==========================================================
+  include ../layouts/footer.pug

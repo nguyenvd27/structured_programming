@@ -1,0 +1,46 @@
+extends ../layouts/header.pug
+block content
+  .container
+    .row
+      .col-12
+        h2
+          span.mt-100.mr-10 Brands
+          span &nbsp;
+          a.btn.btn-success(href="/brands/new") New Brand
+          br
+          h4 Total: #{length}
+        hr.soft
+        br 
+        table.table.table-bordered
+          thead 
+            tr.thead-dark
+              th ID
+              th Name
+              th Description
+              th Created At
+              th Updated At
+              th Edit
+              th Delete
+          tbody
+            if(length > 0)
+              each brand in brands
+                tr
+                  td
+                    a(href="/brands/"+brand.id) #{brand.id}
+                  td
+                    a(href="/brands/"+brand.id) #{brand.name}
+                  td= brand.description
+                  td= brand.created_at
+                  td= brand.updated_at
+                  td
+                    a.btn.btn-warning(href='/brands/'+brand.id+'/edit') Edit
+                  td
+                    form(action='/brands/delete/'+brand.id, method='POST')
+                      input(type='hidden' name='_method' value='DELETE')
+                      input(type='hidden' name='_token' value='the_token')
+                      button.btn.btn-sm.btn-danger(type='submit' onclick="if (!confirm('Are you sure?')) { return false }")
+                        span Delete
+        br 
+        hr.soft
+  // Footer ==========================================================
+  include ../layouts/footer.pug

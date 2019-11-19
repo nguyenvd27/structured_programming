@@ -12,11 +12,11 @@ const usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products/product.route');
 const productsRouterApi = require('./api/routes/products/product.route.api');
 // router of categories and categories api
-//const categoriesRouter = require('./routes/categories/category.route');
-//const categoriesRouterApi = require('./api/routes/categories/category.route.api');
+const categoriesRouter = require('./routes/categories/category.route');
+const categoriesRouterApi = require('./api/routes/categories/category.route.api');
 // router of brands and brands api
-//const brandsRouter = require('./routes/brands/brand.route');
-//const brandsRouterApi = require('./api/routes/brands/brand.route.api');
+const brandsRouter = require('./routes/brands/brand.route');
+const brandsRouterApi = require('./api/routes/brands/brand.route.api');
 
 const app = express();
 var port = process.env.PORT || 3000;
@@ -37,14 +37,14 @@ app.use('/users', usersRouter);
 // products
 app.use('/products', productsRouter);
 // categories
-//app.use('/categories', categoriesRouter);
+app.use('/categories', categoriesRouter);
 // brands
-//app.use('/brands', brandsRouter);
+app.use('/brands', brandsRouter);
 
 // api
 app.use('/api/products', productsRouterApi);
-//app.use('/api/categories', categoriesRouterApi);
-//app.use('/api/brands', brandsRouterApi);
+app.use('/api/categories', categoriesRouterApi);
+app.use('/api/brands', brandsRouterApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
